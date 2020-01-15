@@ -3,7 +3,7 @@ var fs = require('fs');
 var url = require('url');
 var mime = require('mime-types');
 
-var defaultIndex = 'example/page/index.html';
+var defaultIndex = 'example/pages/index.html';
 
 function getContentType(pathname) {
 	return {'Content-Type': mime.lookup(pathname)};
