@@ -1,0 +1,20 @@
+{
+  "name": "page-commander",
+  "description": "Multipage Simulation for Single Page Application.",
+  "version": "0.0.1",
+  "license": "MIT",
+  "keywords": [
+	"page-commander",
+	"pageCommander",
+	"Single Page Application",
+	"Website"
+  ],
+  "devDependencies": {
+	"rollup": "*",
+	"rollup-watch": "*"
+  },
+  "scripts": {
+	"dev": "rollup -c -w",
+	"demo": "node example/index.js"
+  }
+}
