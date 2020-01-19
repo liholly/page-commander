@@ -42,8 +42,7 @@ export function each(agg, fn) {
 	if (isObject(agg)) {
 		var index = 0;
 		for (var k in agg) {
-			index++;
-			_fn = fn(agg[k], k, index);
+			_fn = fn(agg[k], k, index++);
 			if (_fn !== undefined && _fn === false) break;
 		}
 	}
