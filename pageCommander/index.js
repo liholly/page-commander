@@ -13,7 +13,42 @@ import {
 	includes
 } from './helper/index';
 
-export default function (config) {
+//js脚本运行控制 维持单例运行
+window['__SPA'] = {page: {}};
+
+/**
+ * 事件分发器
+ */
+function emit() {
+
+}
+
+/**
+ * 事件监听器
+ */
+function listen() {
+
+}
+
+/**
+ * 创建一个命名空间，用于装载js脚本
+ * 逻辑：
+ *   1.当脚本写在区域之外，即不会切换脚本都执行一遍，这类脚本不需要使用这个方法；
+ *   2.当脚本写在区域之内，即会在切换脚本都执行一遍，这类脚本必须写在这个方法内，该方法会在每次切换页面的时候销毁js脚本的执行资源；
+ *   3.run回调会导入两个助手函数：emit，listen，用于内部控制手动控制资源；
+ * 一个页面执行周期，可以执行多次，比如幻灯片的入口方法，或者是tab面板程序（务必使用js入口方式，bootstrap的html标签方式会导致第二次回到页面时失效）；
+ * 例：SPA.run(function(emit, listen){...})
+ */
+function run(space) {
+	var spaces = __SPA['space'] = __SPA['space'] || [];
+	spaces.push(space(emit, listen));
+
+	listen('pageToggle', function () {
+		__SPA['space'] = null;
+	})
+}
+
+function spa(config) {
 	var conf = extend({split: '|', namespace: true, loading: 'loading ...', timeout: 10000}, config);
 	var loadingHtmlTpl = '<div style="display: block; width: auto; height: auto; position: fixed; left: 0; top:0">${loading}</div>';
 	var $loading;
@@ -259,3 +294,9 @@ export default function (config) {
 		})
 	}
 }
+
+spa.run = run;
+spa.emit = emit;
+spa.listen = listen;
+
+export default spa
